@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class GameScene: SKScene {
     
@@ -15,6 +16,8 @@ class GameScene: SKScene {
     let meteorites = SKSpriteNode(imageNamed: "meteorGrey_med1")
     let spaceDebris = SKSpriteNode(imageNamed: "wingRed_2")
     let spaceShip = SKSpriteNode(imageNamed: "playerShip2_red")
+
+    let fallAction = SKAction.moveTo(y: -50, duration: 2)
     
     override func didMove(to view: SKView) {
         
@@ -32,6 +35,21 @@ class GameScene: SKScene {
         spaceShip.position = CGPoint(x: scene!.frame.midX , y: scene!.frame.minY + 50 )
         spaceShip.size = CGSize(width: 70, height: 50)
         scene?.addChild(spaceShip)
+        
+//        let chooseRandomObj = SKAction.run(){
+//            self.chooseRandom()
+//        }
+        
+        let sequence = SKAction.sequence([fallAction])
+        let endlessAction = SKAction.repeatForever(sequence)
+//        meteorites.run(endlessAction)
+        chooseRandom().run(endlessAction)
+        
+    }
+    
+    func chooseRandom() -> SKSpriteNode {
+        let array = [meteorites, spaceDebris]
+        return array.randomElement()!
     }
 
 //
