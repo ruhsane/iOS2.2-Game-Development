@@ -13,44 +13,59 @@ import UIKit
 class GameScene: SKScene {
     
     let backgroundNode = SKSpriteNode(imageNamed: "vectorstock_16606572")
-    let meteorites = SKSpriteNode(imageNamed: "meteorGrey_med1")
-    let spaceDebris = SKSpriteNode(imageNamed: "wingRed_2")
     let spaceShip = SKSpriteNode(imageNamed: "playerShip2_red")
-
-    let fallAction = SKAction.moveTo(y: -50, duration: 2)
     
     override func didMove(to view: SKView) {
         
-        backgroundNode.position = CGPoint(x: scene!.frame.midX, y: scene!.frame.midY)
-        backgroundNode.size = CGSize(width: scene!.frame.width, height: scene!.frame.height)
+        backgroundNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         backgroundNode.zPosition = -1
-        scene?.addChild(backgroundNode)
+        self.addChild(backgroundNode)
         
-        meteorites.position = CGPoint(x: scene!.frame.midX + 50 , y: scene!.frame.minY + 150)
-        scene?.addChild(meteorites)
-        
-        spaceDebris.position = CGPoint(x: scene!.frame.minX + 150 , y: scene!.frame.maxY - 300)
-        scene?.addChild(spaceDebris)
-        
-        spaceShip.position = CGPoint(x: scene!.frame.midX , y: scene!.frame.minY + 50 )
+        spaceShip.position = CGPoint(x: self.frame.midX , y: self.frame.minY + 50 )
         spaceShip.size = CGSize(width: 70, height: 50)
-        scene?.addChild(spaceShip)
+        self.addChild(spaceShip)
         
-//        let chooseRandomObj = SKAction.run(){
-//            self.chooseRandom()
-//        }
         
-        let sequence = SKAction.sequence([fallAction])
-        let endlessAction = SKAction.repeatForever(sequence)
-//        meteorites.run(endlessAction)
-        chooseRandom().run(endlessAction)
+        endlessFall()
         
     }
     
-    func chooseRandom() -> SKSpriteNode {
-        let array = [meteorites, spaceDebris]
-        return array.randomElement()!
+    func endlessFall() {
+        
+        let waitAction = SKAction.wait(forDuration: 2)
+        let fallAction = SKAction.moveTo(y: -50, duration: 5)
+        let rotateAction = SKAction.rotate(byAngle: 90, duration: 5)
+        
+        let createMoveRotate = SKAction.run {
+            if Bool.random() {
+                let meteorites = SKSpriteNode(imageNamed: "meteorGrey_med1")
+
+                let randomPositionX = CGFloat.random(in: 0..<self.size.width)
+                meteorites.position.x = randomPositionX
+                meteorites.position.y = self.view!.bounds.height
+                self.addChild(meteorites)
+                let group = SKAction.group([fallAction, rotateAction])
+                meteorites.run(group)
+                
+            } else {
+                let spaceDebris = SKSpriteNode(imageNamed: "wingRed_2")
+
+                let randomPositionX = CGFloat.random(in: 0..<self.size.width)
+                spaceDebris.position.x = randomPositionX
+                spaceDebris.position.y = self.view!.bounds.height
+                self.addChild(spaceDebris)
+                let group = SKAction.group([fallAction, rotateAction])
+                spaceDebris.run(group)
+            }
+        }
+
+        let sequence = SKAction.sequence([waitAction, createMoveRotate])
+        let endlessAction = SKAction.repeatForever(sequence)
+        self.run(endlessAction)
+        
     }
+    
 
 //
 //    func touchDown(atPoint pos : CGPoint) {
