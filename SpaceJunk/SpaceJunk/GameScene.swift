@@ -26,7 +26,6 @@ class GameScene: SKScene {
         spaceShip.size = CGSize(width: 70, height: 50)
         self.addChild(spaceShip)
         
-        
         endlessFall()
         
     }
@@ -40,6 +39,7 @@ class GameScene: SKScene {
         let createMoveRotate = SKAction.run {
             if Bool.random() {
                 let meteorites = SKSpriteNode(imageNamed: "meteorGrey_med1")
+                meteorites.name = "item"
 
                 let randomPositionX = CGFloat.random(in: 0..<self.size.width)
                 meteorites.position.x = randomPositionX
@@ -50,6 +50,7 @@ class GameScene: SKScene {
                 
             } else {
                 let spaceDebris = SKSpriteNode(imageNamed: "wingRed_2")
+                spaceDebris.name = "item"
 
                 let randomPositionX = CGFloat.random(in: 0..<self.size.width)
                 spaceDebris.position.x = randomPositionX
@@ -66,6 +67,29 @@ class GameScene: SKScene {
         
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        checkForCollision()
+    }
+    
+    
+    func collision(with node: SKSpriteNode) {
+        print("collided")
+        self.removeAllActions()
+    }
+    
+    func checkForCollision() {
+        var hits: [SKSpriteNode] = []
+        self.enumerateChildNodes(withName: "item") { node, _ in
+            let redNode = node as! SKSpriteNode
+            if redNode.frame.intersects(self.spaceShip.frame) {
+                hits.append(redNode)
+            }
+        }
+        
+        for node in hits {
+            collision(with: node)
+        }
+    }
 
 //
 //    func touchDown(atPoint pos : CGPoint) {

@@ -1,6 +1,7 @@
 import PlaygroundSupport
 import SpriteKit
 import Foundation
+
 class GameScene: SKScene {
     
     let blueNode = SKSpriteNode()
