@@ -14,6 +14,7 @@ class GameScene: SKScene {
     
     let backgroundNode = SKSpriteNode(imageNamed: "vectorstock_16606572")
     let spaceShip = SKSpriteNode(imageNamed: "playerShip2_red")
+    var shipX = 50
     
     override func didMove(to view: SKView) {
         
@@ -22,7 +23,7 @@ class GameScene: SKScene {
         backgroundNode.zPosition = -1
         self.addChild(backgroundNode)
         
-        spaceShip.position = CGPoint(x: self.frame.midX , y: self.frame.minY + 50 )
+        spaceShip.position = CGPoint(x: self.frame.midX , y: 50 )
         spaceShip.size = CGSize(width: 70, height: 50)
         self.addChild(spaceShip)
         
@@ -35,6 +36,7 @@ class GameScene: SKScene {
         let waitAction = SKAction.wait(forDuration: 2)
         let fallAction = SKAction.moveTo(y: -50, duration: 5)
         let rotateAction = SKAction.rotate(byAngle: 90, duration: 5)
+        let deleteAction = SKAction.removeFromParent()
         
         let createMoveRotate = SKAction.run {
             if Bool.random() {
@@ -46,7 +48,8 @@ class GameScene: SKScene {
                 meteorites.position.y = self.view!.bounds.height
                 self.addChild(meteorites)
                 let group = SKAction.group([fallAction, rotateAction])
-                meteorites.run(group)
+                let sequence = SKAction.sequence([group, deleteAction])
+                meteorites.run(sequence)
                 
             } else {
                 let spaceDebris = SKSpriteNode(imageNamed: "wingRed_2")
@@ -57,7 +60,8 @@ class GameScene: SKScene {
                 spaceDebris.position.y = self.view!.bounds.height
                 self.addChild(spaceDebris)
                 let group = SKAction.group([fallAction, rotateAction])
-                spaceDebris.run(group)
+                let sequence = SKAction.sequence([group, deleteAction])
+                spaceDebris.run(sequence)
             }
         }
 
@@ -66,15 +70,27 @@ class GameScene: SKScene {
         self.run(endlessAction)
         
     }
+
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            shipX = Int(location.x)
+        }
+    }
+
     
     override func update(_ currentTime: TimeInterval) {
         checkForCollision()
+        spaceShip.position = CGPoint(x: self.shipX , y: 50 )
+
     }
+
     
     
     func collision(with node: SKSpriteNode) {
         print("collided")
-        self.removeAllActions()
+        node.removeAllActions()
+        node.removeFromParent()
     }
     
     func checkForCollision() {
