@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D11DEE42370A45700DB0A49 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D11DEE22370A45700DB0A49 /* explosion.sks */; };
+		9D11DEE52370A45700DB0A49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D11DEE32370A45700DB0A49 /* Assets.xcassets */; };
+		9D11DEE72370A6E600DB0A49 /* Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9D11DEE62370A6E600DB0A49 /* Explosion.wav */; };
 		9DF9A37B23675BB30052F8AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A37A23675BB30052F8AC /* AppDelegate.swift */; };
-		9DF9A37F23675BB30052F8AC /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DF9A37E23675BB30052F8AC /* Actions.sks */; };
 		9DF9A38123675BB30052F8AC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A38023675BB30052F8AC /* GameScene.swift */; };
 		9DF9A38323675BB30052F8AC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF9A38223675BB30052F8AC /* GameViewController.swift */; };
 		9DF9A38623675BB30052F8AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DF9A38423675BB30052F8AC /* Main.storyboard */; };
@@ -17,9 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9D11DEE22370A45700DB0A49 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
+		9D11DEE32370A45700DB0A49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9D11DEE62370A6E600DB0A49 /* Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Explosion.wav; sourceTree = "<group>"; };
 		9DF9A37723675BB30052F8AC /* SpaceJunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceJunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DF9A37A23675BB30052F8AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9DF9A37E23675BB30052F8AC /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		9DF9A38023675BB30052F8AC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		9DF9A38223675BB30052F8AC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9DF9A38523675BB30052F8AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,6 +46,7 @@
 		9DF9A36E23675BB30052F8AC = {
 			isa = PBXGroup;
 			children = (
+				9D11DEE32370A45700DB0A49 /* Assets.xcassets */,
 				9DF9A37923675BB30052F8AC /* SpaceJunk */,
 				9DF9A37823675BB30052F8AC /* Products */,
 			);
@@ -58,9 +63,10 @@
 		9DF9A37923675BB30052F8AC /* SpaceJunk */ = {
 			isa = PBXGroup;
 			children = (
+				9D11DEE22370A45700DB0A49 /* explosion.sks */,
 				9DF9A37A23675BB30052F8AC /* AppDelegate.swift */,
-				9DF9A37E23675BB30052F8AC /* Actions.sks */,
 				9DF9A38023675BB30052F8AC /* GameScene.swift */,
+				9D11DEE62370A6E600DB0A49 /* Explosion.wav */,
 				9DF9A38223675BB30052F8AC /* GameViewController.swift */,
 				9DF9A38423675BB30052F8AC /* Main.storyboard */,
 				9DF9A38723675BB40052F8AC /* Assets.xcassets */,
@@ -131,7 +137,9 @@
 				9DF9A38623675BB30052F8AC /* Main.storyboard in Resources */,
 				9DF9A38823675BB40052F8AC /* Assets.xcassets in Resources */,
 				9DF9A38B23675BB40052F8AC /* LaunchScreen.storyboard in Resources */,
-				9DF9A37F23675BB30052F8AC /* Actions.sks in Resources */,
+				9D11DEE72370A6E600DB0A49 /* Explosion.wav in Resources */,
+				9D11DEE42370A45700DB0A49 /* explosion.sks in Resources */,
+				9D11DEE52370A45700DB0A49 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

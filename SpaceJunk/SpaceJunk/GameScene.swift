@@ -14,7 +14,9 @@ class GameScene: SKScene {
     
     let backgroundNode = SKSpriteNode(imageNamed: "vectorstock_16606572")
     let spaceShip = SKSpriteNode(imageNamed: "playerShip2_red")
-    var shipX = 50
+    let explosionSound = SKAction.playSoundFileNamed("Explosion", waitForCompletion: true)
+
+    var shipX = 100
     
     override func didMove(to view: SKView) {
         
@@ -28,6 +30,34 @@ class GameScene: SKScene {
         self.addChild(spaceShip)
         
         endlessFall()
+        dropBomb()
+        
+    }
+    
+    func dropBomb() {
+        let waitAction = SKAction.wait(forDuration: 5, withRange: 5)
+        let fallAction = SKAction.moveTo(y: -50, duration: 5)
+        let rotateAction = SKAction.rotate(byAngle: 90, duration: 5)
+        let deleteAction = SKAction.removeFromParent()
+        
+        let createMoveRotate = SKAction.run {
+            let bomb = SKSpriteNode(imageNamed: "bomb")
+            bomb.name = "bomb"
+
+            let randomPositionX = CGFloat.random(in: 0..<self.size.width)
+            bomb.position.x = randomPositionX
+            bomb.position.y = self.view!.bounds.height
+            bomb.size = CGSize(width: 100, height: 60)
+
+            self.addChild(bomb)
+            let group = SKAction.group([fallAction, rotateAction])
+            let sequence = SKAction.sequence([group, deleteAction])
+            bomb.run(sequence)
+        }
+
+        let sequence = SKAction.sequence([waitAction, createMoveRotate])
+        let endlessAction = SKAction.repeatForever(sequence)
+        self.run(endlessAction)
         
     }
     
@@ -85,8 +115,7 @@ class GameScene: SKScene {
 
     }
 
-    
-    
+
     func collision(with node: SKSpriteNode) {
         print("collided")
         node.removeAllActions()
@@ -96,9 +125,36 @@ class GameScene: SKScene {
     func checkForCollision() {
         var hits: [SKSpriteNode] = []
         self.enumerateChildNodes(withName: "item") { node, _ in
-            let redNode = node as! SKSpriteNode
-            if redNode.frame.intersects(self.spaceShip.frame) {
-                hits.append(redNode)
+            let node = node as! SKSpriteNode
+            if node.frame.intersects(self.spaceShip.frame) {
+                hits.append(node)
+            }
+        }
+                
+        self.enumerateChildNodes(withName: "bomb") { node, _ in
+            let bomb = node as! SKSpriteNode
+            if bomb.frame.intersects(self.spaceShip.frame) {
+                print("game over")
+                
+                let explosions = SKAction.run {
+                    let explosionFire = SKEmitterNode(fileNamed: "explosion")!
+                    explosionFire.position = CGPoint(x: bomb.position.x, y: bomb.position.y)
+                    explosionFire.zPosition = 1
+                    self.addChild(explosionFire)
+                    
+                    self.run(self.explosionSound)
+                }
+                
+                let wait = SKAction.wait(forDuration: 1)
+                
+                let finalActions = SKAction.run {
+                    bomb.removeFromParent()
+                    self.isPaused = true
+                    self.removeAllActions()
+                }
+                
+                let sequence = SKAction.sequence([explosions, wait, finalActions])
+                self.run(sequence)
             }
         }
         
@@ -106,6 +162,7 @@ class GameScene: SKScene {
             collision(with: node)
         }
     }
+
 
 //
 //    func touchDown(atPoint pos : CGPoint) {
